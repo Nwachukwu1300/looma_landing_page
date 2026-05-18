@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Looma - Bring Your Drawings to Life</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- SVG Filters for crayon/hand-drawn effect -->
+    <svg class="svg-filters">
+        <defs>
+            <filter id="crayon" x="-20%" y="-20%" width="140%" height="140%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" result="noise"/>
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+            <filter id="rough-edge">
+                <feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="2" result="noise"/>
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="2"/>
+            </filter>
+            <filter id="paper-texture">
+                <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch" result="noise"/>
+                <feColorMatrix type="saturate" values="0"/>
+                <feBlend in="SourceGraphic" mode="multiply"/>
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <a href="#" class="logo">
+                <svg width="120" height="40" viewBox="0 0 120 40">
+                    <text x="10" y="30" font-family="Nunito" font-size="28" font-weight="800" fill="#5BB8F5">Looma</text>
+                </svg>
+            </a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">You draw it. You say it. It moves.</h1>
+                <p class="hero-subtitle">The creative AI app that turns kids' drawings into animated stories</p>
+                <form class="waitlist-form hero-form" id="hero-form">
+                    <div class="form-group">
+                        <input type="email" placeholder="Enter your email" required class="email-input">
+                        <button type="submit" class="btn btn-primary">Join Waitlist</button>
+                    </div>
+                    <p class="form-message"></p>
+                </form>
+            </div>
+            <div class="hero-illustration">
+                <svg viewBox="0 0 200 280" class="stick-figure">
+                    <!-- Head -->
+                    <circle cx="100" cy="50" r="35" fill="none" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+                    <!-- Eyes -->
+                    <circle cx="88" cy="45" r="4" fill="#333"/>
+                    <circle cx="112" cy="45" r="4" fill="#333"/>
+                    <!-- Smile -->
+                    <path d="M 85 60 Q 100 75 115 60" fill="none" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+                    <!-- Body -->
+                    <line x1="100" y1="85" x2="100" y2="170" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+                    <!-- Arms -->
+                    <path d="M 100 110 Q 60 130 40 120" fill="none" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M 100 110 Q 140 130 160 120" fill="none" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+                    <!-- Hands (yellow) -->
+                    <ellipse cx="38" cy="118" rx="12" ry="8" fill="#FFE066" stroke="#333" stroke-width="2"/>
+                    <ellipse cx="162" cy="118" rx="12" ry="8" fill="#FFE066" stroke="#333" stroke-width="2"/>
+                    <!-- Legs -->
+                    <line x1="100" y1="170" x2="70" y2="250" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+                    <line x1="100" y1="170" x2="130" y2="250" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+                    <!-- Feet (yellow) -->
+                    <ellipse cx="70" cy="255" rx="15" ry="8" fill="#FFE066" stroke="#333" stroke-width="2"/>
+                    <ellipse cx="130" cy="255" rx="15" ry="8" fill="#FFE066" stroke="#333" stroke-width="2"/>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Video Section -->
+    <section id="demo" class="demo-section">
+        <div class="container">
+            <div class="video-container">
+                <svg class="video-border" viewBox="0 0 800 450" preserveAspectRatio="none">
+                    <rect x="5" y="5" width="790" height="440" rx="30" ry="30" fill="none" stroke="#5BB8F5" stroke-width="4"/>
+                </svg>
+                <div class="video-placeholder" id="video-placeholder">
+                    <button class="play-button" id="play-button" aria-label="Play video">
+                        <svg viewBox="0 0 80 80" width="80" height="80">
+                            <circle cx="40" cy="40" r="38" fill="#5BB8F5" stroke="#333" stroke-width="2"/>
+                            <polygon points="32,25 32,55 58,40" fill="white"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="video-embed" id="video-embed" style="display: none;">
+                    <iframe
+                        width="100%"
+                        height="100%"
+                        src=""
+                        data-src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+            <p class="demo-text">See Looma in action</p>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="problem" class="problem-section">
+        <div class="container">
+            <div class="problem-cards">
+                <div class="problem-card">
+                    <div class="card-inner">
+                        <svg class="card-border" viewBox="0 0 300 200" preserveAspectRatio="none">
+                            <rect x="3" y="3" width="294" height="194" rx="20" ry="20" fill="none" stroke="#333" stroke-width="2"/>
+                        </svg>
+                        <div class="card-content">
+                            <div class="card-icon">
+                                <svg viewBox="0 0 48 48" width="48" height="48">
+                                    <rect x="8" y="6" width="32" height="24" rx="3" fill="none" stroke="#333" stroke-width="2.5"/>
+                                    <line x1="8" y1="36" x2="40" y2="36" stroke="#333" stroke-width="2.5"/>
+                                    <line x1="20" y1="30" x2="28" y2="30" stroke="#333" stroke-width="2.5"/>
+                                    <line x1="24" y1="30" x2="24" y2="36" stroke="#333" stroke-width="2.5"/>
+                                </svg>
+                            </div>
+                            <h3 class="card-title">Passive screen time</h3>
+                            <p class="card-text">Kids zone out watching content instead of creating it</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="problem-card">
+                    <div class="card-inner">
+                        <svg class="card-border" viewBox="0 0 300 200" preserveAspectRatio="none">
+                            <rect x="3" y="3" width="294" height="194" rx="20" ry="20" fill="none" stroke="#333" stroke-width="2"/>
+                        </svg>
+                        <div class="card-content">
+                            <div class="card-icon">
+                                <svg viewBox="0 0 48 48" width="48" height="48">
+                                    <path d="M12 36 L24 12 L36 36" fill="none" stroke="#333" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M8 36 L16 12 L24 36" fill="none" stroke="#333" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <line x1="10" y1="28" x2="22" y2="28" stroke="#333" stroke-width="2"/>
+                                    <line x1="18" y1="28" x2="30" y2="28" stroke="#333" stroke-width="2"/>
+                                </svg>
+                            </div>
+                            <h3 class="card-title">Creativity discouraged</h3>
+                            <p class="card-text">Most apps don't let kids express their unique ideas</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="problem-card">
+                    <div class="card-inner">
+                        <svg class="card-border" viewBox="0 0 300 200" preserveAspectRatio="none">
+                            <rect x="3" y="3" width="294" height="194" rx="20" ry="20" fill="none" stroke="#333" stroke-width="2"/>
+                        </svg>
+                        <div class="card-content">
+                            <div class="card-icon">
+                                <svg viewBox="0 0 48 48" width="48" height="48">
+                                    <circle cx="24" cy="24" r="16" fill="none" stroke="#333" stroke-width="2.5"/>
+                                    <line x1="24" y1="14" x2="24" y2="26" stroke="#333" stroke-width="2.5" stroke-linecap="round"/>
+                                    <line x1="24" y1="24" x2="32" y2="28" stroke="#333" stroke-width="2.5" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <h3 class="card-title">Screen time anxiety</h3>
+                            <p class="card-text">Parents worry about too much mindless scrolling</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works-section">
+        <div class="container">
+            <h2 class="section-title">How it works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon">
+                        <svg viewBox="0 0 64 64" width="64" height="64">
+                            <path d="M20 44 L12 52 L12 48 L8 48 L8 52 L16 44" fill="none" stroke="#5BB8F5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M48 16 L20 44" fill="none" stroke="#333" stroke-width="2.5" stroke-linecap="round"/>
+                            <path d="M44 12 L52 20 L48 16" fill="none" stroke="#333" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="step-title">Draw</h3>
+                    <p class="step-text">Kids create their own characters and worlds</p>
+                </div>
+                <div class="step-connector">
+                    <svg viewBox="0 0 100 20" preserveAspectRatio="none">
+                        <path d="M 0 10 Q 25 5 50 10 Q 75 15 100 10" fill="none" stroke="#333" stroke-width="2" stroke-dasharray="6 4"/>
+                    </svg>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <svg viewBox="0 0 64 64" width="64" height="64">
+                            <path d="M32 12 C20 12 12 20 12 28 C12 36 20 40 20 44 L20 48 L44 48 L44 44 C44 40 52 36 52 28 C52 20 44 12 32 12" fill="none" stroke="#333" stroke-width="2.5" stroke-linecap="round"/>
+                            <line x1="24" y1="52" x2="40" y2="52" stroke="#333" stroke-width="2.5" stroke-linecap="round"/>
+                            <path d="M28 28 Q32 32 36 28" fill="none" stroke="#5BB8F5" stroke-width="2.5" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="step-title">Speak</h3>
+                    <p class="step-text">Tell Looma what should happen in the story</p>
+                </div>
+                <div class="step-connector">
+                    <svg viewBox="0 0 100 20" preserveAspectRatio="none">
+                        <path d="M 0 10 Q 25 15 50 10 Q 75 5 100 10" fill="none" stroke="#333" stroke-width="2" stroke-dasharray="6 4"/>
+                    </svg>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <svg viewBox="0 0 64 64" width="64" height="64">
+                            <ellipse cx="32" cy="32" rx="24" ry="16" fill="none" stroke="#333" stroke-width="2.5"/>
+                            <circle cx="32" cy="32" r="8" fill="none" stroke="#5BB8F5" stroke-width="2.5"/>
+                            <circle cx="32" cy="32" r="3" fill="#5BB8F5"/>
+                        </svg>
+                    </div>
+                    <h3 class="step-title">Watch</h3>
+                    <p class="step-text">Their drawings come to life as animated stories</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Looma is Different Section -->
+    <section id="why-different" class="why-different-section">
+        <div class="container">
+            <h2 class="section-title">Why Looma is different</h2>
+            <div class="comparison">
+                <div class="comparison-col traditional">
+                    <h3 class="comparison-title">Traditional AI tools</h3>
+                    <ul class="comparison-list">
+                        <li>
+                            <span class="icon-cross">
+                                <svg viewBox="0 0 24 24" width="20" height="20">
+                                    <circle cx="12" cy="12" r="10" fill="none" stroke="#999" stroke-width="2"/>
+                                    <line x1="8" y1="12" x2="16" y2="12" stroke="#999" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                            </span>
+                            Built for adults, not kids
+                        </li>
+                        <li>
+                            <span class="icon-cross">
+                                <svg viewBox="0 0 24 24" width="20" height="20">
+                                    <circle cx="12" cy="12" r="10" fill="none" stroke="#999" stroke-width="2"/>
+                                    <line x1="8" y1="12" x2="16" y2="12" stroke="#999" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                            </span>
+                            Complex interfaces
+                        </li>
+                        <li>
+                            <span class="icon-cross">
+                                <svg viewBox="0 0 24 24" width="20" height="20">
+                                    <circle cx="12" cy="12" r="10" fill="none" stroke="#999" stroke-width="2"/>
+                                    <line x1="8" y1="12" x2="16" y2="12" stroke="#999" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                            </span>
+                            Generate content for you
+                        </li>
+                        <li>
+                            <span class="icon-cross">
+                                <svg viewBox="0 0 24 24" width="20" height="20">
+                                    <circle cx="12" cy="12" r="10" fill="none" stroke="#999" stroke-width="2"/>
+                                    <line x1="8" y1="12" x2="16" y2="12" stroke="#999" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                            </span>
+                            Passive consumption
+                        </li>
+                    </ul>
+                </div>
+                <div class="comparison-divider">
+                    <svg viewBox="0 0 4 200" preserveAspectRatio="none">
+                        <path d="M 2 0 Q 0 50 2 100 Q 4 150 2 200" fill="none" stroke="#5BB8F5" stroke-width="3"/>
+                    </svg>
+                </div>
+                <div class="comparison-col looma">
+                    <h3 class="comparison-title looma-title">Looma</h3>
+                    <ul class="comparison-list">
+                        <li>
+                            <span class="icon-check">
+                                <svg viewBox="0 0 24 24" width="20" height="20">
+                                    <polyline points="6,12 10,16 18,8" fill="none" stroke="#5BB8F5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            Designed for children ages 4-10
+                        </li>
+                        <li>
+                            <span class="icon-check">
+                                <svg viewBox="0 0 24 24" width="20" height="20">
+                                    <polyline points="6,12 10,16 18,8" fill="none" stroke="#5BB8F5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            Draw and speak to create
+                        </li>
+                        <li>
+                            <span class="icon-check">
+                                <svg viewBox="0 0 24 24" width="20" height="20">
+                                    <polyline points="6,12 10,16 18,8" fill="none" stroke="#5BB8F5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            Brings your ideas to life
+                        </li>
+                        <li>
+                            <span class="icon-check">
+                                <svg viewBox="0 0 24 24" width="20" height="20">
+                                    <polyline points="6,12 10,16 18,8" fill="none" stroke="#5BB8F5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            Active creative expression
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Built for Families and Classrooms Section -->
+    <section id="built-for" class="built-for-section">
+        <div class="container">
+            <h2 class="section-title">Built for families and classrooms</h2>
+            <div class="built-for-cards">
+                <div class="built-for-card">
+                    <div class="card-inner">
+                        <svg class="card-border" viewBox="0 0 400 220" preserveAspectRatio="none">
+                            <rect x="3" y="3" width="394" height="214" rx="24" ry="24" fill="none" stroke="#333" stroke-width="2"/>
+                        </svg>
+                        <div class="card-content">
+                            <div class="card-icon">
+                                <svg viewBox="0 0 48 48" width="48" height="48">
+                                    <path d="M8 40 L8 20 L24 8 L40 20 L40 40 L8 40" fill="none" stroke="#5BB8F5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <rect x="18" y="28" width="12" height="12" fill="none" stroke="#5BB8F5" stroke-width="2.5"/>
+                                </svg>
+                            </div>
+                            <h3 class="card-title">For home</h3>
+                            <p class="card-text">Safe, creative screen time that parents feel good about. Kid-friendly controls and privacy-first design.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="built-for-card">
+                    <div class="card-inner">
+                        <svg class="card-border" viewBox="0 0 400 220" preserveAspectRatio="none">
+                            <rect x="3" y="3" width="394" height="214" rx="24" ry="24" fill="none" stroke="#333" stroke-width="2"/>
+                        </svg>
+                        <div class="card-content">
+                            <div class="card-icon">
+                                <svg viewBox="0 0 48 48" width="48" height="48">
+                                    <rect x="6" y="14" width="36" height="24" rx="2" fill="none" stroke="#5BB8F5" stroke-width="2.5"/>
+                                    <line x1="6" y1="22" x2="42" y2="22" stroke="#5BB8F5" stroke-width="2"/>
+                                    <rect x="10" y="26" width="4" height="3" fill="#5BB8F5"/>
+                                    <rect x="16" y="26" width="4" height="3" fill="#5BB8F5"/>
+                                    <rect x="22" y="26" width="4" height="3" fill="#5BB8F5"/>
+                                    <rect x="28" y="26" width="4" height="3" fill="#5BB8F5"/>
+                                    <rect x="34" y="26" width="4" height="3" fill="#5BB8F5"/>
+                                    <rect x="12" y="32" width="24" height="3" fill="#5BB8F5"/>
+                                </svg>
+                            </div>
+                            <h3 class="card-title">For classrooms</h3>
+                            <p class="card-text">Supports storytelling, art, and creative writing lessons. Easy for teachers to manage and share student work.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title">What parents and teachers say</h2>
+            <div class="carousel">
+                <div class="carousel-track" id="carousel-track">
+                    <div class="testimonial-card active">
+                        <div class="testimonial-content">
+                            <p class="testimonial-quote">"Finally, screen time that actually sparks creativity instead of killing it."</p>
+                            <p class="testimonial-author">— David K., Parent</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p class="testimonial-quote">"My students are more engaged than ever. They can't wait to share their animated stories."</p>
+                            <p class="testimonial-author">— Sarah M., 2nd Grade Teacher</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p class="testimonial-quote">"Looma turned my reluctant artist into someone who draws every single day."</p>
+                            <p class="testimonial-author">— Jennifer L., Parent</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-nav">
+                    <button class="carousel-arrow prev" aria-label="Previous testimonial">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <circle cx="12" cy="12" r="11" fill="none" stroke="#333" stroke-width="2"/>
+                            <polyline points="14,8 10,12 14,16" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button class="carousel-arrow next" aria-label="Next testimonial">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <circle cx="12" cy="12" r="11" fill="none" stroke="#333" stroke-width="2"/>
+                            <polyline points="10,8 14,12 10,16" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="carousel-dots">
+                    <button class="dot active" data-index="0" aria-label="Go to testimonial 1"></button>
+                    <button class="dot" data-index="1" aria-label="Go to testimonial 2"></button>
+                    <button class="dot" data-index="2" aria-label="Go to testimonial 3"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section id="cta" class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">Be the first to try Looma</h2>
+            <p class="cta-subtitle">Join the waitlist and give your kids the gift of creative screen time</p>
+            <form class="waitlist-form cta-form" id="cta-form">
+                <div class="form-group">
+                    <input type="email" placeholder="Enter your email" required class="email-input">
+                    <button type="submit" class="btn btn-white">Join Waitlist</button>
+                </div>
+                <p class="form-message"></p>
+            </form>
+            <p class="cta-note">No spam, just updates on when Looma launches</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Looma. Made with love for young creators.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
