@@ -184,7 +184,7 @@ function initWaitlistForms() {
     const ctaForm = document.getElementById('cta-form');
 
     // Google Apps Script Web App URL - Replace with your actual URL
-    const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxTd4SByNOOqdkA4EnIwP1ikHMt10Dgv3OjQESMNxUpDQ_jUzAF4RjW2pfNXGHiiIwR/exec';
 
     function handleFormSubmit(form) {
         const emailInput = form.querySelector('.email-input');
