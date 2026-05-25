@@ -149,30 +149,82 @@ function initCarousel() {
 }
 
 /**
- * VIDEO PLAYER FUNCTIONALITY
- * Click to play video with YouTube embed
+ * VIDEO GRID & MODAL FUNCTIONALITY
+ * Click on video card to open in modal
  */
 function initVideoPlayer() {
-    const playButton = document.getElementById('play-button');
-    const videoPlaceholder = document.getElementById('video-placeholder');
-    const videoEmbed = document.getElementById('video-embed');
-    const iframe = videoEmbed ? videoEmbed.querySelector('iframe') : null;
+    const videoCards = document.querySelectorAll('.video-card');
+    const modal = document.getElementById('video-modal');
+    const modalPlayer = document.getElementById('video-modal-player');
+    const modalCaption = document.getElementById('video-modal-caption');
+    const modalClose = document.getElementById('video-modal-close');
 
-    if (playButton && videoPlaceholder && videoEmbed && iframe) {
-        playButton.addEventListener('click', function() {
-            // Get the video URL from data-src
-            const videoSrc = iframe.getAttribute('data-src');
+    if (!modal || !modalPlayer || !videoCards.length) return;
+
+    // Hover to preview (play thumbnail video)
+    videoCards.forEach(function(card) {
+        const thumbnail = card.querySelector('.video-thumbnail');
+
+        if (thumbnail) {
+            card.addEventListener('mouseenter', function() {
+                thumbnail.play().catch(function() {});
+            });
+
+            card.addEventListener('mouseleave', function() {
+                thumbnail.pause();
+                thumbnail.currentTime = 0;
+            });
+        }
+
+        // Click to open modal
+        card.addEventListener('click', function() {
+            const videoSrc = card.getAttribute('data-video');
+            const caption = card.querySelector('.video-caption');
 
             if (videoSrc) {
-                // Set the iframe src to start loading/playing the video
-                iframe.setAttribute('src', videoSrc);
+                // Determine video type
+                const isQuicktime = videoSrc.endsWith('.mov');
+                const sourceEl = modalPlayer.querySelector('source');
 
-                // Hide placeholder, show video
-                videoPlaceholder.style.display = 'none';
-                videoEmbed.style.display = 'block';
+                sourceEl.src = videoSrc;
+                sourceEl.type = isQuicktime ? 'video/quicktime' : 'video/mp4';
+
+                modalPlayer.load();
+                modalPlayer.play().catch(function() {});
+
+                if (caption) {
+                    modalCaption.textContent = caption.textContent;
+                }
+
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
             }
         });
+    });
+
+    // Close modal
+    function closeModal() {
+        modal.classList.remove('active');
+        modalPlayer.pause();
+        modalPlayer.currentTime = 0;
+        document.body.style.overflow = '';
     }
+
+    modalClose.addEventListener('click', closeModal);
+
+    // Close on backdrop click
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
 }
 
 /**

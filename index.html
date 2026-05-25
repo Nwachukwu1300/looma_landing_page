@@ -85,33 +85,158 @@
     <!-- Demo Video Section -->
     <section id="demo" class="demo-section">
         <div class="container">
-            <div class="video-container">
-                <svg class="video-border" viewBox="0 0 800 450" preserveAspectRatio="none">
-                    <rect x="5" y="5" width="790" height="440" rx="30" ry="30" fill="none" stroke="#5BB8F5" stroke-width="4"/>
-                </svg>
-                <div class="video-placeholder" id="video-placeholder">
-                    <button class="play-button" id="play-button" aria-label="Play video">
-                        <svg viewBox="0 0 80 80" width="80" height="80">
-                            <circle cx="40" cy="40" r="38" fill="#5BB8F5" stroke="#333" stroke-width="2"/>
-                            <polygon points="32,25 32,55 58,40" fill="white"/>
-                        </svg>
-                    </button>
+            <h2 class="section-title">See Looma in action</h2>
+            <div class="video-grid">
+                <!-- Full App Recording - Featured -->
+                <div class="video-card featured" data-video="demovideos/full_app_rec.mp4">
+                    <div class="video-card-inner">
+                        <video class="video-thumbnail" muted loop playsinline preload="metadata">
+                            <source src="demovideos/full_app_rec.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-overlay">
+                            <div class="play-icon">
+                                <svg viewBox="0 0 48 48" width="48" height="48">
+                                    <circle cx="24" cy="24" r="22" fill="#5BB8F5" stroke="#333" stroke-width="2"/>
+                                    <polygon points="20,16 20,32 34,24" fill="white"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="video-caption">"Watch the full app experience"</p>
+                    </div>
                 </div>
-                <div class="video-embed" id="video-embed" style="display: none;">
-                    <iframe
-                        width="100%"
-                        height="100%"
-                        src=""
-                        data-src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen>
-                    </iframe>
+                <!-- Animation Examples -->
+                <div class="video-card" data-video="demovideos/let_it_dance.mp4">
+                    <div class="video-card-inner">
+                        <video class="video-thumbnail" muted loop playsinline preload="metadata">
+                            <source src="demovideos/let_it_dance.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-overlay">
+                            <div class="play-icon">
+                                <svg viewBox="0 0 48 48" width="48" height="48">
+                                    <circle cx="24" cy="24" r="22" fill="#5BB8F5" stroke="#333" stroke-width="2"/>
+                                    <polygon points="20,16 20,32 34,24" fill="white"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="video-caption">"Let it dance"</p>
+                    </div>
+                </div>
+                <div class="video-card" data-video="demovideos/let_her_breakdance.mp4">
+                    <div class="video-card-inner">
+                        <video class="video-thumbnail" muted loop playsinline preload="metadata">
+                            <source src="demovideos/let_her_breakdance.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-overlay">
+                            <div class="play-icon">
+                                <svg viewBox="0 0 48 48" width="48" height="48">
+                                    <circle cx="24" cy="24" r="22" fill="#5BB8F5" stroke="#333" stroke-width="2"/>
+                                    <polygon points="20,16 20,32 34,24" fill="white"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="video-caption">"Let her breakdance"</p>
+                    </div>
+                </div>
+                <div class="video-card" data-video="demovideos/let_her_dance_crazy.mp4">
+                    <div class="video-card-inner">
+                        <video class="video-thumbnail" muted loop playsinline preload="metadata">
+                            <source src="demovideos/let_her_dance_crazy.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-overlay">
+                            <div class="play-icon">
+                                <svg viewBox="0 0 48 48" width="48" height="48">
+                                    <circle cx="24" cy="24" r="22" fill="#5BB8F5" stroke="#333" stroke-width="2"/>
+                                    <polygon points="20,16 20,32 34,24" fill="white"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="video-caption">"Let her dance crazy"</p>
+                    </div>
+                </div>
+                <div class="video-card" data-video="demovideos/let_him_dance_and_shake_his_arms_crazy.mp4">
+                    <div class="video-card-inner">
+                        <video class="video-thumbnail" muted loop playsinline preload="metadata">
+                            <source src="demovideos/let_him_dance_and_shake_his_arms_crazy.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-overlay">
+                            <div class="play-icon">
+                                <svg viewBox="0 0 48 48" width="48" height="48">
+                                    <circle cx="24" cy="24" r="22" fill="#5BB8F5" stroke="#333" stroke-width="2"/>
+                                    <polygon points="20,16 20,32 34,24" fill="white"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="video-caption">"Let him dance and shake his arms crazy"</p>
+                    </div>
+                </div>
+                <div class="video-card" data-video="demovideos/let_him_kick_one_leg.mp4">
+                    <div class="video-card-inner">
+                        <video class="video-thumbnail" muted loop playsinline preload="metadata">
+                            <source src="demovideos/let_him_kick_one_leg.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-overlay">
+                            <div class="play-icon">
+                                <svg viewBox="0 0 48 48" width="48" height="48">
+                                    <circle cx="24" cy="24" r="22" fill="#5BB8F5" stroke="#333" stroke-width="2"/>
+                                    <polygon points="20,16 20,32 34,24" fill="white"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="video-caption">"Let him kick one leg"</p>
+                    </div>
+                </div>
+                <div class="video-card" data-video="demovideos/let_it_be_jumping.mp4">
+                    <div class="video-card-inner">
+                        <video class="video-thumbnail" muted loop playsinline preload="metadata">
+                            <source src="demovideos/let_it_be_jumping.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-overlay">
+                            <div class="play-icon">
+                                <svg viewBox="0 0 48 48" width="48" height="48">
+                                    <circle cx="24" cy="24" r="22" fill="#5BB8F5" stroke="#333" stroke-width="2"/>
+                                    <polygon points="20,16 20,32 34,24" fill="white"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="video-caption">"Let it be jumping"</p>
+                    </div>
+                </div>
+                <div class="video-card" data-video="demovideos/make_it_dance_like_an_octopus.mp4">
+                    <div class="video-card-inner">
+                        <video class="video-thumbnail" muted loop playsinline preload="metadata">
+                            <source src="demovideos/make_it_dance_like_an_octopus.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-overlay">
+                            <div class="play-icon">
+                                <svg viewBox="0 0 48 48" width="48" height="48">
+                                    <circle cx="24" cy="24" r="22" fill="#5BB8F5" stroke="#333" stroke-width="2"/>
+                                    <polygon points="20,16 20,32 34,24" fill="white"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="video-caption">"Make it dance like an octopus"</p>
+                    </div>
                 </div>
             </div>
-            <p class="demo-text">See Looma in action</p>
         </div>
     </section>
+
+    <!-- Video Modal -->
+    <div class="video-modal" id="video-modal">
+        <div class="video-modal-content">
+            <button class="video-modal-close" id="video-modal-close" aria-label="Close video">
+                <svg viewBox="0 0 24 24" width="32" height="32">
+                    <circle cx="12" cy="12" r="11" fill="white" stroke="#333" stroke-width="2"/>
+                    <line x1="8" y1="8" x2="16" y2="16" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="16" y1="8" x2="8" y2="16" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+            <video class="video-modal-player" id="video-modal-player" controls playsinline>
+                <source src="" type="video/mp4">
+            </video>
+            <p class="video-modal-caption" id="video-modal-caption"></p>
+        </div>
+    </div>
 
     <!-- Problem Section -->
     <section id="problem" class="problem-section">
