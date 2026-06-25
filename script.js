@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initVideoPlayer();
     initWaitlistForms();
     initContactForm();
+    initFAQ();
     initSmoothScroll();
 });
 
@@ -162,11 +163,22 @@ function initVideoPlayer() {
 
     if (!modal || !modalPlayer || !videoCards.length) return;
 
-    // Hover to preview (play thumbnail video)
+    // Handle video loading - show skeleton until loaded
     videoCards.forEach(function(card) {
         const thumbnail = card.querySelector('.video-thumbnail');
 
         if (thumbnail) {
+            // Mark as loaded when video data is available
+            thumbnail.addEventListener('loadeddata', function() {
+                thumbnail.classList.add('loaded');
+            });
+
+            // Also check if already loaded (cached)
+            if (thumbnail.readyState >= 2) {
+                thumbnail.classList.add('loaded');
+            }
+
+            // Hover to preview (play thumbnail video)
             card.addEventListener('mouseenter', function() {
                 thumbnail.play().catch(function() {});
             });
@@ -402,6 +414,33 @@ function initContactForm() {
         .finally(function() {
             submitBtn.disabled = false;
             submitBtn.textContent = originalText;
+        });
+    });
+}
+
+/**
+ * FAQ ACCORDION FUNCTIONALITY
+ */
+function initFAQ() {
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(function(item) {
+        const question = item.querySelector('.faq-question');
+
+        question.addEventListener('click', function() {
+            const isActive = item.classList.contains('active');
+
+            // Close all other items
+            faqItems.forEach(function(otherItem) {
+                otherItem.classList.remove('active');
+                otherItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+            });
+
+            // Toggle current item
+            if (!isActive) {
+                item.classList.add('active');
+                question.setAttribute('aria-expanded', 'true');
+            }
         });
     });
 }
