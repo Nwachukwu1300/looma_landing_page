@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initCarousel();
     initVideoPlayer();
     initWaitlistForms();
+    initContactForm();
     initSmoothScroll();
 });
 
@@ -326,6 +327,81 @@ function submitToGoogleSheets(email, scriptUrl) {
         .catch(function(error) {
             console.error('Form submission error:', error);
             resolve(false);
+        });
+    });
+}
+
+/**
+ * CONTACT FORM FUNCTIONALITY
+ * Submit contact form to Google Sheets
+ */
+function initContactForm() {
+    const contactForm = document.getElementById('contact-form');
+
+    // Use the same Google Apps Script URL
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxTd4SByNOOqdkA4EnIwP1ikHMt10Dgv3OjQESMNxUpDQ_jUzAF4RjW2pfNXGHiiIwR/exec';
+
+    if (!contactForm) return;
+
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const nameInput = document.getElementById('contact-name');
+        const emailInput = document.getElementById('contact-email');
+        const subjectInput = document.getElementById('contact-subject');
+        const messageInput = document.getElementById('contact-message');
+        const submitBtn = contactForm.querySelector('.contact-submit');
+        const messageEl = contactForm.querySelector('.form-message');
+
+        const name = nameInput.value.trim();
+        const email = emailInput.value.trim();
+        const subject = subjectInput.value;
+        const message = messageInput.value.trim();
+
+        // Validate
+        if (!name || !email || !subject || !message) {
+            showMessage(messageEl, 'Please fill in all fields.', 'error');
+            return;
+        }
+
+        if (!isValidEmail(email)) {
+            showMessage(messageEl, 'Please enter a valid email address.', 'error');
+            return;
+        }
+
+        // Disable button and show loading
+        submitBtn.disabled = true;
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Sending...';
+
+        // Submit to Google Sheets
+        fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                type: 'contact',
+                name: name,
+                email: email,
+                subject: subject,
+                message: message,
+                timestamp: new Date().toISOString(),
+                source: window.location.href
+            })
+        })
+        .then(function() {
+            showMessage(messageEl, "Thanks for reaching out! We'll get back to you soon.", 'success');
+            contactForm.reset();
+        })
+        .catch(function(error) {
+            console.error('Contact form error:', error);
+            showMessage(messageEl, 'Something went wrong. Please try again.', 'error');
+        })
+        .finally(function() {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
         });
     });
 }
