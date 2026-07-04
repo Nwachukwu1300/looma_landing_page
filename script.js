@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initVideoPlayer();
     initWaitlistForms();
     initContactForm();
+    initDemoForm();
     initFAQ();
     initSmoothScroll();
 });
@@ -414,6 +415,85 @@ function initContactForm() {
         .finally(function() {
             submitBtn.disabled = false;
             submitBtn.textContent = originalText;
+        });
+    });
+}
+
+/**
+ * DEMO REQUEST FORM
+ */
+function initDemoForm() {
+    const demoForm = document.getElementById('demo-form');
+
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxTd4SByNOOqdkA4EnIwP1ikHMt10Dgv3OjQESMNxUpDQ_jUzAF4RjW2pfNXGHiiIwR/exec';
+
+    if (!demoForm) return;
+
+    demoForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const nameInput = document.getElementById('demo-name');
+        const emailInput = document.getElementById('demo-email');
+        const roleInput = document.getElementById('demo-role');
+        const reasonInput = document.getElementById('demo-reason');
+        const submitBtn = demoForm.querySelector('.demo-submit');
+
+        const name = nameInput.value.trim();
+        const email = emailInput.value.trim();
+        const role = roleInput.value;
+        const reason = reasonInput.value.trim();
+
+        // Validate required fields
+        if (!name || !email || !role) {
+            alert('Please fill in all required fields.');
+            return;
+        }
+
+        if (!isValidEmail(email)) {
+            alert('Please enter a valid email address.');
+            return;
+        }
+
+        // Disable button and show loading
+        submitBtn.disabled = true;
+        const originalHTML = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<span>Submitting...</span>';
+
+        // Submit to Google Sheets
+        fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                type: 'demo',
+                name: name,
+                email: email,
+                role: role,
+                reason: reason,
+                timestamp: new Date().toISOString(),
+                source: window.location.href
+            })
+        })
+        .then(function() {
+            // Show success state
+            submitBtn.innerHTML = '<span>Request Sent!</span>';
+            submitBtn.style.background = '#4CAF50';
+            demoForm.reset();
+
+            // Reset button after 3 seconds
+            setTimeout(function() {
+                submitBtn.innerHTML = originalHTML;
+                submitBtn.style.background = '';
+                submitBtn.disabled = false;
+            }, 3000);
+        })
+        .catch(function(error) {
+            console.error('Demo form error:', error);
+            alert('Something went wrong. Please try again.');
+            submitBtn.innerHTML = originalHTML;
+            submitBtn.disabled = false;
         });
     });
 }
